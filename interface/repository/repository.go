@@ -9,6 +9,5 @@ type DBHandler interface {
 	GetUserByID(userID string) (*domain.User, error)
 	UpdateUser(user *domain.User) error
 	DeleteUser(userID string) error
-	LoginUserDB(email string, password string) (*domain.User, error)
 	
 }

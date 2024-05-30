@@ -135,8 +135,7 @@ func (controller *UserController) LoginUserController(c *fiber.Ctx) error {
         log.Println(err)
         return err
     }
-
-    user, err := controller.UserInteractor.LoginUserUC(user.Email, user.Passwd)
+    dbUser, err := controller.UserInteractor.LoginUserUC(user.Email)
     if err != nil {
         log.Println(err)
         return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
@@ -145,5 +144,13 @@ func (controller *UserController) LoginUserController(c *fiber.Ctx) error {
         })
     }
 
-    return c.JSON(user)
+    err = security.ComparePassword(dbUser.Passwd, user.Passwd)
+    if err != nil {
+        log.Println(err)
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "status":  "error",
+            "message": "Invalid email or password",
+        })
+    }
+    return c.JSON(dbUser)
 }

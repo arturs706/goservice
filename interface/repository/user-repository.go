@@ -80,8 +80,8 @@ func (repo UserRepo) Delete(ctx context.Context, userID string) error {
     return nil
 }
 
-func (repo UserRepo) LoginUserDomain(ctx context.Context, email string, passwd string) (*domain.User, error) {
-    user, err := repo.handler.LoginUserDB(email, passwd)
+func (repo UserRepo) LoginUserDomain(ctx context.Context, email string) (*domain.User, error) {
+    user, err := repo.handler.GetUserByEmail(email)
     if err != nil {
         return nil, err
     }
