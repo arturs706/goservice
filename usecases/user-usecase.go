@@ -68,3 +68,12 @@ func (interactor *UserInteractor) GetAllUsers() ([]*domain.User, error) {
 	}
 	return users, nil
 }
+
+func (interactor *UserInteractor) LoginUserUC(email string, passwd string) (*domain.User, error) {
+    user, err := interactor.UserRepository.LoginUserDomain(context.Background(), email, passwd)
+    if err != nil {
+        log.Println(err)
+        return nil, err
+    }
+    return user, nil
+}

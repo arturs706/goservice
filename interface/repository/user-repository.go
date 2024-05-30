@@ -79,3 +79,11 @@ func (repo UserRepo) Delete(ctx context.Context, userID string) error {
     }
     return nil
 }
+
+func (repo UserRepo) LoginUserDomain(ctx context.Context, email string, passwd string) (*domain.User, error) {
+    user, err := repo.handler.LoginUserDB(email, passwd)
+    if err != nil {
+        return nil, err
+    }
+    return user, nil
+}

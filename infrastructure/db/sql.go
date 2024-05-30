@@ -122,3 +122,19 @@ func (dbHandler DBHandler) Close() error {
 	}
 	return nil
 }
+
+
+func (dbHandler DBHandler) LoginUserDB(email string, passwd string) (*domain.User, error) {
+	row := dbHandler.Conn.QueryRow("SELECT * FROM users WHERE email=$1", email)
+	user := new(domain.User)
+	err := row.Scan(&user.UserID, &user.FullName, &user.DOB, &user.Gender, &user.MobPhone, &user.Email, &user.EmailVerified, &user.EmailVerToken, &user.Passwd, &user.AuthMethod, &user.SocialID, &user.CreatedAt)
+	if err != nil {
+		return nil, err
+	} else {
+
+		return user, nil
+
+	}
+	
+}
+
