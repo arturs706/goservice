@@ -44,3 +44,6 @@ Thumbs.db
 fiber.lock
 
 /ms-one-data
+
+.gitignore
+*.rest
