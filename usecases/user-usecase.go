@@ -3,15 +3,14 @@ package usecases
 import (
     "context"
     "example.com/gouserservice/domain"
-	"example.com/gouserservice/interface/repository" 
     "log"
 )
 
 type UserInteractor struct {
-    UserRepository repository.UserRepo
+    UserRepository domain.UserRepository
 }
 
-func NewUserInteractor(repo repository.UserRepo) UserInteractor { 
+func NewUserInteractor(repo domain.UserRepository) UserInteractor { 
     return UserInteractor{repo}
 }
 

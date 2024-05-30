@@ -28,4 +28,5 @@ type UserRepository interface {
     GetByID(ctx context.Context, userID string) (*User, error)
     Update(ctx context.Context, user *User) error
     Delete(ctx context.Context, userID string) error
+
 }

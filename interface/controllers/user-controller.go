@@ -128,3 +128,67 @@ func (controller *UserController) GetAllUsers(c *fiber.Ctx) error {
 	return c.JSON(users)
 }
 
+
+
+
+
+// func (controller *UserController) CreateLocalUser(c *fiber.Ctx) error {
+//     user := new(domain.User)
+
+//     if err := c.BodyParser(user); err != nil {
+//         log.Println(err)
+//         return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+//             "status": "error",
+// 			"message": "Invalid request payload",
+//         })
+//     }
+
+// 	if user.UserID == "" {
+//         user.UserID = uuid.New().String()
+//     }
+
+// 	if user.AuthMethod == "" {
+//         user.AuthMethod = "LOCAL"
+//     }
+
+//     hashedPassword, err := security.HashPassword(user.Passwd)
+//     if err != nil {
+//         log.Println(err)
+//         return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+//             "status": "error",
+// 			"message": "Failed to hash password",
+//         })
+//     }
+
+//     user.Passwd = hashedPassword
+
+// 	secretKey := os.Getenv("VERIFICATION_TOKEN")
+// 	if secretKey == "" {
+// 		log.Fatalf("VERIFICATION_TOKEN not set in .env file")
+// 	}
+// 	jwtHandler := auth.NewJWTHandler(secretKey)
+// 	token, err := jwtHandler.GenerateEmailVerToken(user)
+// 	fmt.Println(token)
+// 	user.EmailVerToken = token
+
+
+//     err = controller.UserInteractor.CreateLocalUser(user)
+//     if err != nil {
+//         log.Println(err)
+//         if strings.Contains(err.Error(), "duplicate key value violates unique constraint") {
+//             return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+//                 "status": "error",
+// 				"message": "User already exists",
+//             })
+//         }
+//         return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+//             "status": "error",
+// 			"message": "Failed to create user",
+//         })
+//     }
+
+//     return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+// 		"status": "success",
+// 		"created": user.Email,
+// 	})
+// }

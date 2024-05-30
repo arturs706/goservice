@@ -48,7 +48,7 @@ func (dbHandler DBHandler) GetAllUsers() ([]*domain.User, error) {
 	return users, nil
 }
 
-func (dbHandler DBHandler) CreateUser(user *domain.User) error {
+func (dbHandler DBHandler) CreateUserDB(user *domain.User) error {
     stmt, err := dbHandler.Conn.Prepare("INSERT INTO users(user_id, full_name, dob, gender, mob_phone, email, email_ver, email_ver_token, passwd, auth_method, social_id, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *")
     if err != nil {
         return err
