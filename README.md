@@ -92,9 +92,3 @@ go mod tidy
   - Demonstrate the use of Clean Architecture in a Go Fiber application.
   - Provide a scalable and maintainable structure for building web services.
   - Showcase best practices for Go development, including dependency injection, SOLID principles, and unit testing.
-
-## Contributing
-- Contributions are welcome! Please open an issue or submit a pull request for any improvements, bug fixes, or new features.
-
-## License
-- This project is licensed under the MIT License. See the LICENSE file for details.
