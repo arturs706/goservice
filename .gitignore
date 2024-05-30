@@ -46,4 +46,4 @@ fiber.lock
 /ms-one-data
 
 .gitignore
-*.rest
+rest.rest
