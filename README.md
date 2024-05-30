@@ -37,7 +37,7 @@ src
 
 ### infrastructure
 - This layer provides implementations for interfaces defined in the domain and usecases layers. It includes external services, database access, and framework integrations.
-  - `db`: Database connection and SQL-related logic.
+  - `db`: Database connection and PostgreSQL-related logic.
     - `sql.go`: Handles database interactions and queries.
   - `auth`: Authentication mechanisms.
     - `jwt.go`: JWT (JSON Web Token) generation and validation.
