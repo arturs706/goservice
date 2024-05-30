@@ -70,4 +70,31 @@ src
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/user-service.git
+   git clone https://github.com/arturs706/user-service.git
+
+### Install dependencies:
+```bash
+go mod tidy
+```
+
+### Set up environment variables:
+- Create a `.env` file in the root directory and add necessary environment variables.
+
+### Running the Application
+- To start the application, run:
+  ```bash
+  go run main.go
+    ```
+- The application will start on `localhost:2001` by default.
+
+## Project Goals
+- This project aims to:
+  - Demonstrate the use of Clean Architecture in a Go Fiber application.
+  - Provide a scalable and maintainable structure for building web services.
+  - Showcase best practices for Go development, including dependency injection, SOLID principles, and unit testing.
+
+## Contributing
+- Contributions are welcome! Please open an issue or submit a pull request for any improvements, bug fixes, or new features.
+
+## License
+- This project is licensed under the MIT License. See the LICENSE file for details.
