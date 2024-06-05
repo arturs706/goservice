@@ -23,4 +23,6 @@ func (router *Router) Route(app *fiber.App) {
     userRoutes.Delete("/:userID", router.Controller.DeleteUser)
     userRoutes.Get("/", router.Controller.GetAllUsers)
     userRoutes.Post("/login", router.Controller.LoginUserController)
+    userRoutes.Post("/login/google", router.Controller.CreateGoogleUser)
+    userRoutes.Post("/login/facebook", router.Controller.CreateFacebookUser)
 }

@@ -24,6 +24,26 @@ func (interactor *UserInteractor) CreateLocalUser(user *domain.User) error {
 	return nil
 }
 
+
+func (interactor *UserInteractor) CreateGoogleUser(user *domain.User) error {
+	err := interactor.UserRepository.CreateGoogle(context.Background(), user) 
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+func (interactor *UserInteractor) CreateFacebookUser(user *domain.User) error {
+	err := interactor.UserRepository.CreateFacebook(context.Background(), user) 
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
+}
+
+
 func (interactor *UserInteractor) GetUserByEmail(email string) (*domain.User, error) {
 	user, err := interactor.UserRepository.GetByEmail(context.Background(), email) 
 	if err != nil {

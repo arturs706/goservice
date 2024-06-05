@@ -79,9 +79,96 @@ func (controller *UserController) CreateLocalUser(c *fiber.Ctx) error {
 
     return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"created": user.Email,
+		"email": user.Email,
 	})
 }
+
+
+func (controller *UserController) CreateFacebookUser(c *fiber.Ctx) error {
+	user := new(domain.User)
+
+    if err := c.BodyParser(user); err != nil {
+        log.Println(err)
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+            "status":  "error",
+            "message": "Invalid request payload",
+        })
+    }
+
+    log.Printf("Received user: %+v\n", user)
+
+    if user.UserID == "" {
+        user.UserID = uuid.New().String()
+    }
+
+    if user.AuthMethod == "" {
+        user.AuthMethod = "FACEBOOK"
+    }
+
+    err := controller.UserInteractor.CreateGoogleUser(user)
+    if err != nil {
+        log.Println(err)
+        if strings.Contains(err.Error(), "duplicate key value violates unique constraint") {
+            return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+                "status":  "error",
+                "message": "User already exists",
+            })
+        }
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "status":  "error",
+            "message": "Failed to create user",
+        })
+    }
+
+    return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+        "status": "success",
+        "email": user.Email,
+    })
+}
+
+func (controller *UserController) CreateGoogleUser(c *fiber.Ctx) error {
+    user := new(domain.User)
+
+    if err := c.BodyParser(user); err != nil {
+        log.Println(err)
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+            "status":  "error",
+            "message": "Invalid request payload",
+        })
+    }
+
+    log.Printf("Received user: %+v\n", user)
+
+    if user.UserID == "" {
+        user.UserID = uuid.New().String()
+    }
+
+    if user.AuthMethod == "" {
+        user.AuthMethod = "GOOGLE"
+    }
+
+    err := controller.UserInteractor.CreateGoogleUser(user)
+    if err != nil {
+        log.Println(err)
+        if strings.Contains(err.Error(), "duplicate key value violates unique constraint") {
+            return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+                "status":  "error",
+                "message": "User already exists",
+            })
+        }
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "status":  "error",
+            "message": "Failed to create user",
+        })
+    }
+
+    return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+        "status": "success",
+        "email": user.Email,
+    })
+}
+
+
 
 
 func (controller *UserController) GetUserByID(c *fiber.Ctx) error {
@@ -144,6 +231,7 @@ func (controller *UserController) LoginUserController(c *fiber.Ctx) error {
         })
     }
 
+	user.Passwd = strings.TrimSpace(user.Passwd)
     err = security.ComparePassword(dbUser.Passwd, user.Passwd)
     if err != nil {
         log.Println(err)
@@ -152,5 +240,8 @@ func (controller *UserController) LoginUserController(c *fiber.Ctx) error {
             "message": "Invalid email or password",
         })
     }
-    return c.JSON(dbUser)
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"status": "success",
+		"email": dbUser.Email,
+	})
 }

@@ -24,6 +24,8 @@ type User struct {
 type UserRepository interface {
     GetAllUsers(ctx context.Context) ([]*User, error)
     CreateLocal(ctx context.Context, user *User) error
+    CreateGoogle(ctx context.Context, user *User) error
+    CreateFacebook(ctx context.Context, user *User) error
     GetByEmail(ctx context.Context, email string) (*User, error)
     GetByID(ctx context.Context, userID string) (*User, error)
     Update(ctx context.Context, user *User) error
